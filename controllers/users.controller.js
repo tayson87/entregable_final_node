@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 
 // Models
 const { User } = require('../models/user.model');
-const { Order } = require('../models/order.model');
+const { Product } = require('../models/product.model');
 
 // Utils
 const { catchAsync } = require('../util/catchAsync');
@@ -126,37 +126,16 @@ exports.deleteUser = catchAsync(async (req, res, next) => {
   res.status(204).json({ status: 'success' });
 });
 
- exports.getAllOrders = catchAsync(async(req, res, next) => {
-  const orders  = await Order.findAll({
-    where:
-           { status: 'active' }
+exports.getUsersProducts = catchAsync(async (req, res, next) => {
+  const { id } = req.currentUser;
+
+  const products = await Product.findAll({
+    where: { userId: id }
   });
 
   res.status(200).json({
-     status: 'success', 
-     data: { orders }
-     });
+    status: 'success',
+    data: { products }
+  });
 });
-
-exports.getOrderById = catchAsync(async(req,res, netx) => {
-  const { id } = req.params;
- 
-  const order = await  order.findOne({ 
-        where: {
-           id
-       }
-   });
-
-   if(!order) {     
-            return next(new AppError(404, 'order not found !'));         
-   }
-
-   res.status (200).json({
-       status: 'success',
-       data: {
-           order,
-       },
-   });
-});
-
  

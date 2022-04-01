@@ -9,8 +9,8 @@ exports.userExists = catchAsync(async (req, res, next) => {
   const { id } = req.params;
 
   const user = await User.findOne({
-    attributes: { exclude: ['password'] },
-    where: { id, status: 'active' }
+    where: { status: 'active', id },
+    attributes: { exclude: ['password'] }
   });
 
   if (!user) {

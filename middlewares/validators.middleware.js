@@ -30,26 +30,19 @@ exports.createProductValidators = [
 
 // END: Movies validators
 
-// // Actors validators
-// exports.createActorValidators = [
-//   body('name').isString().notEmpty(),
-//   body('country')
-//     .isString()
-//     .withMessage('Country must be a string')
-//     .notEmpty()
-//     .withMessage('Must provide a valid country name'),
-//   body('rating')
-//     .isNumeric()
-//     .withMessage('Rating must be a number')
-//     .custom((value) => value > 0 && value <= 5)
-//     .withMessage('Rating must be between 1 and 5'),
-//   body('age')
-//     .isNumeric()
-//     .withMessage('Age must be a number')
-//     .custom((value) => value > 0)
-//     .withMessage('Age must be greater than 0')
-// ];
-// END: Actors validators
+exports.addProductToCartValidation = [
+  body('productId')
+    .isNumeric()
+    .withMessage('Product id must be a number')
+    .custom((value) => value > 0)
+    .withMessage('Must provide a valid id'),
+  body('quantity')
+    .isNumeric()
+    .withMessage('Quantity must be a number')
+    .custom((value) => value > 0)
+    .withMessage('Quantity must be greater than 0')
+];
+
 
 exports.validateResult = catchAsync(async (req, res, next) => {
   // Validate req.body
