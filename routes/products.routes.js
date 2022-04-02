@@ -28,12 +28,7 @@ router.use(validateSession);
 router
   .route('/')
   .get(getAllProducts)
-  .post(
-    protectAdmin,
-    createProductValidators,
-    validateResult,
-    createProduct
-  );
+  .post(protectAdmin, createProductValidators, validateResult, createProduct);
 
 router
   .use('/:id', productExists)

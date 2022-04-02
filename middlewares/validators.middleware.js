@@ -25,7 +25,7 @@ exports.createProductValidators = [
     .isNumeric()
     .withMessage('Price must be a number')
     .custom((value) => value > 0)
-    .withMessage('insert price please'), 
+    .withMessage('insert price please')
 ];
 
 // END: Movies validators
@@ -43,13 +43,12 @@ exports.addProductToCartValidation = [
     .withMessage('Quantity must be greater than 0')
 ];
 
-
 exports.validateResult = catchAsync(async (req, res, next) => {
   // Validate req.body
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-        const errorMsg = errors
+    const errorMsg = errors
       .array()
       .map(({ msg }) => msg)
       .join('. ');

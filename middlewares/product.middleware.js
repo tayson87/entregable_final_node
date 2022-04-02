@@ -21,11 +21,11 @@ exports.productExists = catchAsync(async (req, res, next) => {
   req.product = product;
   next();
 });
-exports.productOwner = catchAsync(async(req,res,next) => {
+exports.productOwner = catchAsync(async (req, res, next) => {
   const { currentUser, product } = req;
 
-  if(product.userId !== currentUser.id){
-    return next(new AppError(403, 'you are not  owner of this product '))
+  if (product.userId !== currentUser.id) {
+    return next(new AppError(403, 'you are not  owner of this product '));
   }
 
   next();
