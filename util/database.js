@@ -3,11 +3,6 @@ const dotenv = require('dotenv');
 
 dotenv.config({ path: './config.env' });
 
-console.log(process.env.DB_USER)
- console.log(process.env.DB_PASSWORD)
- console.log(process.env.DB)
- console.log(process.env.DB_HOST)
-
 const sequelize = new Sequelize({
   host: process.env.DB_HOST,
   username: process.env.DB_USER,
@@ -17,12 +12,12 @@ const sequelize = new Sequelize({
   dialect: 'postgres',
   logging: false,
 
-  dialectOptions: {
+  dialectOptions: process.env.NODE_ENV === 'production' ? {
     ssl: {
       require: true,
       rejectUnauthorized: false,
     },
-  },
+  }: {},
 });
 
 module.exports = { sequelize };

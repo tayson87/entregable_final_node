@@ -139,3 +139,40 @@ exports.getUsersProducts = catchAsync(async (req, res, next) => {
   });
 });
  
+exports.getUsersOrders = catchAsync(async (req, res, next) => {
+  // Get the user in session
+  const { currentUser } = req;
+
+  const orders = await Order.findAll({ where: { userId: currentUser.id } });
+
+  res.status(200).json({
+    status: 'success',
+    data: { orders }
+  });
+});
+
+exports.getOrderById = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+
+  const order = await Order.findOne({
+    where: { id },
+    include: [
+      {
+        model: Cart,
+        include: [
+          { model: Product, through: { where: { status: 'purchased' } } }
+        ]
+      }
+    ]
+  });
+
+  if (!order) {
+    return next(new AppError(404, 'No order found with that id'));
+  }
+
+  res.status(200).json({
+    status: 'success',
+    data: { order }
+  });
+});
+

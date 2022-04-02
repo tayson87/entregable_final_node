@@ -190,7 +190,7 @@ exports.getUserCart = catchAsync(async (req, res, next) => {
     const newOrder = await Order.create({
       userId: currentUser.id,
       cartId: cart.id,
-      issuedAt: Date.now().toLocaleString(),
+      issuedAt: new Date ().toLocaleString(),
       totalPrice
     });
   
